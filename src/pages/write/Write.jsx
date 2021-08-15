@@ -23,11 +23,17 @@ export default function Write() {
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post("/upload", data);
+        const api = axios.create({
+          baseURL:'https://epk-blogpost.herokuapp.com/'
+        })
+        await api.post("/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.post("/posts", newPost);
+      const api = axios.create({
+        baseURL:'https://epk-blogpost.herokuapp.com/'
+      })
+      const res = await api.post("/posts", newPost);
       window.location.replace("/post/" + res.data._id);
     } catch (err) {}
   };

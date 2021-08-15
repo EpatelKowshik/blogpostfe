@@ -13,7 +13,10 @@ export default function Login() {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/auth/login", {
+      const api = axios.create({
+        baseURL:'https://epk-blogpost.herokuapp.com/'
+      })
+      const res = await api.post("/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });

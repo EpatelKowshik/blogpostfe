@@ -30,11 +30,17 @@ export default function Settings() {
       data.append("file", file);
       updatedUser.profilePic = filename;
       try {
-        await axios.post("/upload", data);
+        const api = axios.create({
+          baseURL:'https://epk-blogpost.herokuapp.com/'
+        })
+        await api.post("/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.put("/users/" + user._id, updatedUser);
+      const api = axios.create({
+        baseURL:'https://epk-blogpost.herokuapp.com/'
+      })
+      const res = await api.put("/users/" + user._id, updatedUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {
