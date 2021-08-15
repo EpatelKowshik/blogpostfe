@@ -11,10 +11,12 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("right place")
     const newPost = {
-      username: user.username,
+      author: user._id,
       title,
-      desc,
+      content:desc,
+      categories:["animals"]
     };
     if (file) {
       const data =new FormData();
@@ -26,7 +28,7 @@ export default function Write() {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
-        await api.post("/upload", data);
+        await api.post("api/upload", data);
       } catch (err) {}
     }
     try {

@@ -12,7 +12,7 @@ export default function Settings() {
   const [success, setSuccess] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5000/images/"
+  const PF = "https://epk-blogpost.herokuapp.com/images/"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,8 +33,9 @@ export default function Settings() {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
-        await api.post("/upload", data);
-      } catch (err) {}
+        await api.post("api/upload", data);
+      } catch (err) {
+      }
     }
     try {
       const api = axios.create({
