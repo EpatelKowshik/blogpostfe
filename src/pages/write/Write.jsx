@@ -20,15 +20,13 @@ export default function Write() {
     };
     if (file) {
       const data =new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      newPost.photo = filename;
       try {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
-        await api.post("api/upload", data);
+        const res = await api.post("api/upload", data);
+        console.log(res)
+        newPost.photo = res["filename"];
       } catch (err) {}
     }
     try {
