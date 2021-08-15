@@ -20,6 +20,9 @@ export default function Write() {
     };
     if (file) {
       const data =new FormData();
+      let filename = Date.now() + file.name;
+      data.append("name",filename)
+      data.append("file",file)
       try {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
