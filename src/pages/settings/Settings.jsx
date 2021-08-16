@@ -28,12 +28,12 @@ export default function Settings() {
       const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
-      updatedUser.profilePic = filename;
       try {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
-        await api.post("api/upload", data);
+        let res = await api.post("api/upload", data);
+        updatedUser.profilePic = res.data["filename"];
       } catch (err) {
       }
     }

@@ -11,7 +11,7 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("right place")
+   
     const newPost = {
       author: user._id,
       title,
@@ -27,9 +27,8 @@ export default function Write() {
         const api = axios.create({
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
-        const res = await api.post("api/upload", data);
-        console.log(res)
-        newPost.photo = res["filename"];
+        let res = await api.post("api/upload", data);        
+        newPost.photo = res.data["filename"];
       } catch (err) {}
     }
     try {
