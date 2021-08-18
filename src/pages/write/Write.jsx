@@ -17,7 +17,7 @@ export default function Write() {
       author: user["username"],
       title,
       content:desc,
-      categories:category,
+      categories:category.toLowerCase().split(', '),
     };
     if (file) {
       const data =new FormData();
