@@ -34,7 +34,7 @@ export default function Sidebar() {
         <ul className="sidebarList">
           {cats.map((c,index) => (
             <Link to={`/?cat=${c.name}`} className="link" key={index}>
-            <li className="sidebarListItem">{c.name}</li>
+            <li className="sidebarListItem">{(c.name).toUpperCase()}</li>
             </Link>
           ))}
         </ul>

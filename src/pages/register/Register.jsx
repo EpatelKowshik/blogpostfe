@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./register.css";
 
 export default function Register() {
+  const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,15 +13,30 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
+    const newUser = {
+      username,
+      email,
+      password,
+    }
+    if (file) {
+      const data =new FormData();
+      let filename = Date.now() + file.name;
+      data.append("name",filename)
+      data.append("file",file)
+      try {
+        const api = axios.create({
+          baseURL:'https://epk-blogpost.herokuapp.com/'
+        })
+        let res = await api.post("api/upload", data);  
+        console.log(res)      
+        newUser.photo = res.data["filename"];
+      } catch (err) {}
+    }
     try {
       const api = axios.create({
         baseURL:'https://epk-blogpost.herokuapp.com/'
       })
-      const res = await api.post("/auth/register", {
-        username,
-        email,
-        password,
-      });
+      const res = await api.post("auth/register",newUser);
       res.data && window.location.replace("/login");
     } catch (err) {
       setError(true);
@@ -30,6 +46,18 @@ export default function Register() {
     <div className="register">
       <span className="registerTitle">Register</span>
       <form className="registerForm" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="fileInput">
+              Upload Profile Image
+              <i className="fas fa-user-edit"></i>
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              style={{ display: "none" }}
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
         <label>Username</label>
         <input
           type="text"

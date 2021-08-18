@@ -24,7 +24,7 @@ export default function SinglePost() {
       const res = await api.get("/posts/" + path);
       setPost(res.data);
       setTitle(res.data.title);
-      setDesc(res.data.desc);
+      setDesc(res.data.content);
     };
     getPost();
   }, [path]);
@@ -89,8 +89,8 @@ export default function SinglePost() {
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={`/?user=${post.username}`} className="link">
-              <b> {post.username}</b>
+            <Link to={`/?user=${post.author}`} className="link">
+              <b> {post.author}</b>
             </Link>
           </span>
           <span className="singlePostDate">

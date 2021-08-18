@@ -5,13 +5,13 @@ import { Context } from "../../context/Context";
 import axios from "axios";
 
 export default function Settings() {
+  const { user, dispatch } = useContext(Context);
   const [file, setFile] = useState(null);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const { user, dispatch } = useContext(Context);
   const PF = "https://epk-blogpost.herokuapp.com/image/"
 
   const handleSubmit = async (e) => {
@@ -33,7 +33,8 @@ export default function Settings() {
           baseURL:'https://epk-blogpost.herokuapp.com/'
         })
         let res = await api.post("api/upload", data);
-        updatedUser.profilePic = res.data["filename"];
+        console.log(res,updatedUser)
+        updatedUser.photo = res.data["filename"];
       } catch (err) {
       }
     }
@@ -53,7 +54,7 @@ export default function Settings() {
       <div className="settingsWrapper">
         <div className="settingsTitle">
           <span className="settingsUpdateTitle">Update Your Account</span>
-          <span className="settingsDeleteTitle">Delete Account</span>
+          <span className="settingsDeleteTitle"><i className="far fa-trash-alt"></i></span>
         </div>
         <form className="settingsForm" onSubmit={handleSubmit}>
           <label>Profile Picture</label>
@@ -63,7 +64,7 @@ export default function Settings() {
               alt=""
             />
             <label htmlFor="fileInput">
-              <i className="settingsPPIcon far fa-user-circle"></i>
+              <i className="settingsPPIcon fas fa-user-edit"></i>
             </label>
             <input
               type="file"
@@ -87,6 +88,7 @@ export default function Settings() {
           <label>Password</label>
           <input
             type="password"
+            placeholder={"******"}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="settingsSubmit" type="submit">
